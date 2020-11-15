@@ -18,6 +18,12 @@ const Container = styled.div`
   background-color: ${color.black};
   text-align: -webkit-center;
 
+  h1 {
+    width: 100%;
+    text-align: center;
+    color: ${color.yellow};
+  }
+
   @media ${device.mobileM} {
     padding: 1rem;
     display: flex;
@@ -51,7 +57,8 @@ const LoaderContainer = styled.div`
 const mapStateToProps = ({ planet, searchPlanet }: ApplicationState) => ({
   data: planet.data,
   isLoading: planet.isLoading,
-  error: planet.errorMessage,
+  error: planet.hasError,
+  errorMessage: planet.errorMessage,
   pagination: planet.pagination,
   searchData: searchPlanet.data,
   isSearching: searchPlanet.isSearching,
@@ -94,6 +101,8 @@ class Home extends React.Component<Props, {}> {
       isSearching,
       searchData,
       isSearchLoading,
+      error,
+      errorMessage,
     } = this.props;
     const planets = isSearching ? searchData : data;
 
@@ -106,6 +115,15 @@ class Home extends React.Component<Props, {}> {
         <NotFoundContainer>
           <span>404 Not Found 🚀</span>
         </NotFoundContainer>
+      );
+
+    if (error || errorMessage)
+      return (
+        <Fragment>
+          <Container>
+            <h1>Oops.. Something wrong occurs in the server 🚀 </h1>
+          </Container>
+        </Fragment>
       );
 
     return (

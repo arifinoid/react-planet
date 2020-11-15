@@ -50,7 +50,8 @@ const reducer: Reducer<IPlanetDetailState, PlanetDetailState> = (
     case PlanetDetailActionTypes.FETCH_PLANET_DETAIL_ERROR: {
       return {
         ...state,
-        hasError: action.payload.data,
+        hasError: action.payload.hasError,
+        errorMessage: action.payload.errorMessage,
         isLoading: false,
       };
     }

@@ -16,6 +16,10 @@ const Container = styled.div`
   min-height: 75vh;
   display: flex;
   justify-content: center;
+
+  h1 {
+    color: ${color.yellow};
+  }
 `;
 
 const InnerContainer = styled.div`
@@ -101,6 +105,8 @@ const PlanetDetail = ({
   resetPlanetDetail,
   data,
   isLoading,
+  hasError,
+  errorMessage,
 }: Props) => {
   const { id } = match.params;
 
@@ -113,6 +119,15 @@ const PlanetDetail = ({
   }, [id, fetchPlanetDetail, resetPlanetDetail]);
 
   if (isLoading) return <Loader isLoading={isLoading} />;
+  if (hasError || errorMessage)
+    return (
+      <>
+        <Container>
+          <h1>Oops.. Something wrong occurs in the server 🚀 </h1>
+        </Container>
+      </>
+    );
+
   return (
     <Container>
       <InnerContainer>

@@ -42,7 +42,7 @@ export const fetchPlanetDetail = (id: number) => async (
       type: PlanetDetailActionTypes.FETCH_PLANET_DETAIL_ERROR,
       payload: {
         hasError: true,
-        message: error.meesage,
+        message: error.message,
       },
     });
     return error;
