@@ -1,1 +1,2 @@
-export const API_BASEURL: string = "https://swapi.dev";
+export const API_BASEURL: string =
+  "https://cors-anywhere.herokuapp.com/https://swapi.dev";

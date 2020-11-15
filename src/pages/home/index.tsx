@@ -23,6 +23,7 @@ const Container = styled.div`
     display: flex;
     flex-wrap: none;
     align-items: center;
+    text-align: -webkit-left;
   }
 `;
 
@@ -118,7 +119,7 @@ class Home extends React.Component<Props, {}> {
                   <Card key={index} id={id} footer={<span>{item.name}</span>} />
                 );
               })
-            : renderSearch()}
+            : isSearching && renderSearch()}
         </Container>
         <Loader isLoading={isLoading} />
       </Fragment>
