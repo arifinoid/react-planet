@@ -3,7 +3,7 @@ import { Reducer } from "react";
 import { IPlanetState } from "../../typings/state";
 import { PlanetsActionTypes, PlanetState } from "./types";
 
-export const initialState: IPlanetState = {
+const initialState: IPlanetState = {
   isLoading: false,
   hasError: false,
   errorMessage: "",
@@ -28,14 +28,7 @@ const reducer: Reducer<IPlanetState, PlanetState> = (
         hasError: false,
       };
     }
-    case PlanetsActionTypes.FETCH_PLANET_AND_RESET: {
-      return {
-        ...state,
-        data: [],
-        isLoading: true,
-        hasError: false,
-      };
-    }
+
     case PlanetsActionTypes.FETCH_PLANET_SUCCESS: {
       return {
         ...state,
@@ -54,8 +47,14 @@ const reducer: Reducer<IPlanetState, PlanetState> = (
         },
       };
     }
-    case PlanetsActionTypes.FETCH_ERROR: {
-      return { ...state, isLoading: false, hasError: action.payload };
+
+    case PlanetsActionTypes.FETCH_PLANET_ERROR: {
+      return {
+        ...state,
+        isLoading: false,
+        hasError: action.payload.hasError,
+        errorMessage: action.payload.errorMessage,
+      };
     }
     default: {
       return state;

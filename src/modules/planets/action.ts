@@ -3,7 +3,7 @@ import Redux from "redux";
 import { PlanetsActionTypes } from "./types";
 
 import { API_BASEURL } from "../../utils";
-import { IData, IPlanet } from "../../typings/api";
+import { IPlanetData, IPlanet } from "../../typings/api";
 import { callApi } from "../../utils/callApi";
 
 interface IPayload {
@@ -15,13 +15,16 @@ interface IPayload {
 }
 
 interface IFetchPlanet {
-  type: typeof PlanetsActionTypes.FETCH_PLANET;
+  type:
+    | typeof PlanetsActionTypes.FETCH_PLANET
+    | typeof PlanetsActionTypes.FETCH_PLANET_SUCCESS
+    | typeof PlanetsActionTypes.FETCH_PLANET_ERROR;
   payload: IPayload;
 }
 
 export type PlanetActionTypes = IFetchPlanet;
 
-export const fetchPlanetList = (page = 1) => async (
+export const fetchPlanetList = (page: number = 1) => async (
   dispatch: Redux.Dispatch
 ) => {
   dispatch({
@@ -29,7 +32,7 @@ export const fetchPlanetList = (page = 1) => async (
   });
 
   try {
-    const data: IData = await callApi(
+    const data: IPlanetData = await callApi(
       "get",
       API_BASEURL,
       `/planets/?page=${page}`
@@ -46,6 +49,13 @@ export const fetchPlanetList = (page = 1) => async (
       },
     });
   } catch (e) {
+    dispatch({
+      type: PlanetsActionTypes.FETCH_PLANET_ERROR,
+      payload: {
+        hasError: true,
+        errorMessage: e.message,
+      },
+    });
     return e;
   }
 };

@@ -9,6 +9,7 @@ import { fetchPlanetList } from "../../modules/planets/action";
 import { ApplicationState } from "../../typings/state";
 import { IPlanet } from "../../typings/api";
 import { color } from "../../globalStyle";
+import Loader from "../../components/Loader";
 
 const Container = styled.div`
   display: flex;
@@ -16,26 +17,6 @@ const Container = styled.div`
   justify-content: center;
   padding: 2rem;
   background-color: ${color.black};
-`;
-
-const Footer = styled.footer`
-  background-color: ${color.black};
-  display: flex;
-  justify-content: center;
-  padding: 1rem;
-
-  span {
-    color: ${color.yellow};
-    font-weight: 300;
-
-    a {
-      text-decoration: none;
-
-      &:visited {
-        color: ${color.yellow};
-      }
-    }
-  }
 `;
 
 const mapStateToProps = ({ planet }: ApplicationState) => ({
@@ -75,7 +56,9 @@ class Home extends React.Component<Props, {}> {
   }
 
   render() {
-    const { data } = this.props;
+    const { data, isLoading } = this.props;
+
+    if (isLoading) return <Loader isLoading={isLoading} />;
     return (
       <Fragment>
         <Container>
@@ -83,18 +66,6 @@ class Home extends React.Component<Props, {}> {
             <Card key={index} index={index} footer={<span>{item.name}</span>} />
           ))}
         </Container>
-        <Footer>
-          <span>
-            <a
-              href="http://github.com/arifinoid"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Arifinoid
-            </a>
-            , {new Date().getFullYear()}
-          </span>
-        </Footer>
       </Fragment>
     );
   }

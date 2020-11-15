@@ -4,7 +4,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Layout from "../layout";
 
 import Home from "../pages/home";
-import PlanetDetail from "../pages/planet";
+import PlanetDetail from "../pages/planet-detail";
 
 export const Routes = () => (
   <BrowserRouter>

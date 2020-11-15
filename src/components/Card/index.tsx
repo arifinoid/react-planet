@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 
 import { color } from "../../globalStyle";
+import Placeholder from "../../assets/images/placeholder.jpg";
 
 interface PropTypes {
   footer: ReactNode;
@@ -14,6 +15,7 @@ const CardContainer = styled(Link)`
   transition: 0.3s;
   width: 20%;
   margin-bottom: 2rem;
+  text-decoration: none;
 
   &:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
@@ -36,20 +38,18 @@ const CardFooter = styled.div`
   span {
     font-weight: 500;
     color: ${color.darkGrey};
-    text-decoration: none;
   }
 `;
 
 export default (({ index, footer }) => (
-  <CardContainer to={`/planets/${index + 1}`}>
+  <CardContainer to={`/planet/${index + 1}`}>
     <img
       src={`https://starwars-visualguide.com/assets/img/planets/${
         index + 1
       }.jpg`}
       alt={`planets-${index + +1}`}
       onError={(e: any) => {
-        e.target.src =
-          "https://starwars-visualguide.com/assets/img/placeholder.jpg";
+        e.target.src = Placeholder;
       }}
     />
     <CardFooter>{footer}</CardFooter>

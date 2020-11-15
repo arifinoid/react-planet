@@ -2,9 +2,8 @@ import { IPlanet } from "../../typings/api";
 
 export enum PlanetsActionTypes {
   FETCH_PLANET = "@@planets/FETCH_PLANET",
-  FETCH_PLANET_AND_RESET = "@@planets/FETCH_REQUEST_AND_RESET",
   FETCH_PLANET_SUCCESS = "@@planets/FETCH_PLANET_SUCCESS",
-  FETCH_ERROR = "@@planets/FETCH_ERROR",
+  FETCH_PLANET_ERROR = "@@planets/FETCH_ERROR",
 }
 
 // Declare state types with `readonly` modifier to get compile time immutability.
