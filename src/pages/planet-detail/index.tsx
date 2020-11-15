@@ -17,7 +17,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
 
-  h1 {
+  h1.error {
     color: ${color.yellow};
   }
 `;
@@ -123,7 +123,9 @@ const PlanetDetail = ({
     return (
       <>
         <Container>
-          <h1>Oops.. Something wrong occurs in the server 🚀 </h1>
+          <h1 className="error">
+            Oops.. Something wrong occurs in the server 🚀{" "}
+          </h1>
         </Container>
       </>
     );
