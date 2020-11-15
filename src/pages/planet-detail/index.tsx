@@ -7,7 +7,7 @@ import {
   fetchPlanetDetail,
   resetPlanetDetail,
 } from "../../modules/planet-detail/action";
-import { color } from "../../globalStyle";
+import { color, device } from "../../globalStyle";
 import Loader from "../../components/Loader";
 import Placeholder from "../../assets/images/placeholder.jpg";
 
@@ -26,6 +26,14 @@ const InnerContainer = styled.div`
   margin: auto;
   padding: 1rem;
   min-height: 30vh;
+
+  @media ${device.mobileM} {
+    padding: 0.25rem;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    min-height: calc(90vh - 2rem);
+  }
 `;
 
 const ImageContainer = styled.div`
@@ -33,6 +41,11 @@ const ImageContainer = styled.div`
   display: flex;
   align-items: center;
   padding: 1rem;
+
+  @media ${device.mobileM} {
+    padding: 1rem;
+    width: calc(100% - 2rem);
+  }
 `;
 
 const PlanetImage = styled.img`
@@ -44,6 +57,11 @@ const PlanetDescription = styled.div`
   padding: 3rem;
   background-color: ${color.light};
   width: 100%;
+
+  @media ${device.mobileM} {
+    padding: 1rem;
+    width: calc(100% - 2rem);
+  }
 `;
 
 const PlanetName = styled.h1`

@@ -5,8 +5,7 @@ import { RingLoader } from "react-spinners";
 import { color } from "../../globalStyle";
 
 const Container = styled.div`
-  min-height: 60vh;
-  margin: 3rem;
+  margin: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,6 +25,6 @@ interface PropTypes {
 export default (({ isLoading }) => (
   <Container>
     <RingLoader loading={isLoading} color={color.yellow} />
-    <h1>Loading ... </h1>
+    {isLoading && <h1>Loading ... </h1>}
   </Container>
 )) as FunctionComponent<PropTypes>;

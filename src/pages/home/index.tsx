@@ -8,22 +8,53 @@ import Card from "../../components/Card";
 import { fetchPlanetList } from "../../modules/planets/action";
 import { ApplicationState } from "../../typings/state";
 import { IPlanet } from "../../typings/api";
-import { color } from "../../globalStyle";
+import { color, device } from "../../globalStyle";
 import Loader from "../../components/Loader";
 
 const Container = styled.div`
+  margin-top: 2rem;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  padding: 2rem;
   background-color: ${color.black};
+  text-align: -webkit-center;
+
+  @media ${device.mobileM} {
+    padding: 1rem;
+    display: flex;
+    flex-wrap: none;
+    align-items: center;
+  }
 `;
 
-const mapStateToProps = ({ planet }: ApplicationState) => ({
+const NotFoundContainer = styled.div`
+  height: 50vh;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+
+  span {
+    color: ${color.yellow};
+    font-weight: 400;
+    font-size: 36px;
+  }
+`;
+
+const LoaderContainer = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const mapStateToProps = ({ planet, searchPlanet }: ApplicationState) => ({
   data: planet.data,
   isLoading: planet.isLoading,
   error: planet.errorMessage,
   pagination: planet.pagination,
+  searchData: searchPlanet.data,
+  isSearching: searchPlanet.isSearching,
+  isSearchLoading: searchPlanet.isLoading,
 });
 
 const mapDispatchToProps = { fetchPlanetList };
@@ -56,16 +87,40 @@ class Home extends React.Component<Props, {}> {
   }
 
   render() {
-    const { data, isLoading } = this.props;
+    const {
+      data,
+      isLoading,
+      isSearching,
+      searchData,
+      isSearchLoading,
+    } = this.props;
+    const planets = isSearching ? searchData : data;
 
-    if (isLoading) return <Loader isLoading={isLoading} />;
+    const renderSearch = () =>
+      isSearchLoading ? (
+        <LoaderContainer>
+          <Loader isLoading={isSearchLoading} />
+        </LoaderContainer>
+      ) : (
+        <NotFoundContainer>
+          <span>404 Not Found 🚀</span>
+        </NotFoundContainer>
+      );
+
     return (
       <Fragment>
         <Container>
-          {data.map((item: IPlanet, index: number) => (
-            <Card key={index} index={index} footer={<span>{item.name}</span>} />
-          ))}
+          {planets.length > 0
+            ? planets.map((item: IPlanet, index: number) => {
+                const id = parseInt(item.url.split("/")[5]);
+
+                return (
+                  <Card key={index} id={id} footer={<span>{item.name}</span>} />
+                );
+              })
+            : renderSearch()}
         </Container>
+        <Loader isLoading={isLoading} />
       </Fragment>
     );
   }

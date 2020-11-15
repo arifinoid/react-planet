@@ -2,12 +2,12 @@ import React, { FunctionComponent, ReactNode } from "react";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 
-import { color } from "../../globalStyle";
+import { color, device } from "../../globalStyle";
 import Placeholder from "../../assets/images/placeholder.jpg";
 
 interface PropTypes {
   footer: ReactNode;
-  index: number;
+  id: number;
 }
 
 const CardContainer = styled(Link)`
@@ -16,14 +16,30 @@ const CardContainer = styled(Link)`
   width: 20%;
   margin-bottom: 2rem;
   text-decoration: none;
+  flex: 1 1 21%;
 
   &:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   }
 
-  &:not(:last-of-type) {
-    margin-right: 1rem;
+  @media ${device.mobileM} {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    align-items: center;
+
+    &:not(:last-of-type) {
+      margin-bottom: 1rem;
+    }
   }
+`;
+
+const InnerContainer = styled.div`
+  max-width: calc(100% / 1.5);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 1rem;
 
   img {
     width: 100%;
@@ -34,6 +50,7 @@ const CardContainer = styled(Link)`
 const CardFooter = styled.div`
   padding: 1rem 2rem;
   background-color: ${color.light};
+  width: 100%;
 
   span {
     font-weight: 500;
@@ -41,17 +58,17 @@ const CardFooter = styled.div`
   }
 `;
 
-export default (({ index, footer }) => (
-  <CardContainer to={`/planet/${index + 1}`}>
-    <img
-      src={`https://starwars-visualguide.com/assets/img/planets/${
-        index + 1
-      }.jpg`}
-      alt={`planets-${index + +1}`}
-      onError={(e: any) => {
-        e.target.src = Placeholder;
-      }}
-    />
-    <CardFooter>{footer}</CardFooter>
+export default (({ id, footer }) => (
+  <CardContainer to={`/planet/${id}`}>
+    <InnerContainer>
+      <img
+        src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`}
+        alt={`planets-${id}`}
+        onError={(e: any) => {
+          e.target.src = Placeholder;
+        }}
+      />
+      <CardFooter>{footer}</CardFooter>
+    </InnerContainer>
   </CardContainer>
 )) as FunctionComponent<PropTypes>;
